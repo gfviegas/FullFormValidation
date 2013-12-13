@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" />
+        <meta name="description" content="Validação de Formularios" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="author" content="Thiago Luciano" />
+        <title>Jquery Full Valida Form</title>
+        <link href="global.css?v=1" rel="stylesheet" />
+    </head>
+    <body id="inicial">
+        <div class="limites">
+            <header class="topo">
+
+            </header>
+            <div class="conteudo">
+                <form id="FullValidaForm" method="post">
+                    <div>
+                        <!-- Input de texto simples //-->
+                        <label></label>
+                        <input type="text" name="text" id="teste" value="" data-conf="[{req:true, max:'5', msg:'Preencha o <b>Nome</b>'}]" form="FullValidaForm" /><br><br><br><br>
+                        <input type="password" name="password" id="teste2" value="" data-conf="[{req:true, msg:'Preencha o <b>Campo</b>'}]" form="FullValidaForm" /><br><br><br><br>
+                        <input type="file" name="file" id="teste3" data-conf="[{req:true, msg:'Caminho do arquivo escolhido não é uma imagem!', filetype:'gif,jpg,png,bmp'}]" form="FullValidaForm" /><br><br><br><br>
+                        <input type="radio" name="radioboxteste[]" id="teste4" value="" data-conf="[{req:true, msg:'Preencha o <b>Campo</b>'}]" form="FullValidaForm" /><br><br><br><br>
+                        <input type="checkbox" name="checboxteste[]" id="teste5" value="" data-conf="[{req:true, msg:'Preencha o <b>Campo</b>'}]" form="FullValidaForm" /><br><br><br><br>
+                        <input type="checkbox" name="checboxteste[]" id="teste5-1" value="" data-conf="[{req:true, msg:'Preencha o <b>Campo</b>'}]" form="FullValidaForm" /><br><br><br><br>
+                        <textarea name="textarea" form="FullValidaForm" data-conf="[{req:true, max:'20'}]"></textarea><br><br><br><br>
+                    </div>
+                    <div>
+                        <!-- Botão Submit //-->
+                        <input type="submit" id="Submeter" form="FullValidaForm" value="Teste" />
+                </form>
+                <footer class="rodape">
+
+                </footer>
+            </div>
+        </div>
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/jquery-2.0.3.min.js">\x3C/script>')</script>
+    <script src="jquery.fullvalidaform.1.0.0.js"></script>
+    <script type="text/javascript">
+        $("#FullValidaForm").FullValidaForm();
+    </script>
+</body>
+</html>
