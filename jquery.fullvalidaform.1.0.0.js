@@ -6,21 +6,25 @@
  * para validação de forumulários complexos. Contará com validações e mascaras.
  */
 ;
-(function($, window, undefined) {
+(function($, window, undefined)
+{
 
     // Métodos Literários
     var methods = {
 
         // Método de inicialização
-        'InitField': function($Ob, field) {
+        'InitField': function($Ob, field)
+        {
             field.conf = $Ob._methods.getConf($Ob, field);
             field.position = $Ob._methods.getPosition(field);
             var Type = field.prop('type');
-            switch (Type) {
+            switch (Type.toLowerCase())
+            {
 
                 // Inicialização input Text
                 case 'text':
-                    if(field.conf.max){
+                    if(field.conf.max)
+                    {
                         $(field).attr('maxlength', field.conf.max);
                     }
                     break;
@@ -35,7 +39,8 @@
 
                 // Inicialização Textarea
                 case 'textarea':
-                    if(field.conf.max){
+                    if(field.conf.max)
+                    {
                         $(field).attr('maxlength', field.conf.max);
                     }
                     $Ob._methods.SetLimitCharacter($Ob, field);
@@ -43,7 +48,8 @@
 
                 // Inicialização input Password
                 case 'password':
-                    if(field.conf.max){
+                    if(field.conf.max)
+                    {
                         $(field).attr('maxlength', field.conf.max);
                     }
                     break;
@@ -59,29 +65,40 @@
         },
 
         // Método de Validações
-        'ValidField': function($Ob, field) {
+        'ValidField': function($Ob, field)
+        {
             field.conf = $Ob._methods.getConf($Ob, field);
             field.position = $Ob._methods.getPosition(field);
             var Type = field.prop('type');
-            if (field.conf) {
+            if (field.conf)
+            {
 
                 // Regras para campos obrigatórios
-                if (field.conf.req) {
-                    switch (Type) {
+                if (field.conf.req)
+                {
+                    switch (Type.toLowerCase())
+                    {
 
                         // Validações para input Text
                         case 'text':
-                            if (field.val() == "") {
+                            if (field.val() == "")
+                            {
                                 $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Required, $Ob._settings.ColorErro);
                                 field.focus();
                                 $Ob._defaults.Success = false;
                                 return false;
                             }
+
+                            if (field.conf.type != "")
+                            {
+                                $Ob._methods.ValidType($Ob, field);
+                            }
                             break;
 
                         // Validações para Radiobox
                         case 'radio':
-                            if (!field.prop('checked')) {
+                            if (!field.prop('checked'))
+                            {
                                 $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Required, $Ob._settings.ColorErro);
                                 field.focus();
                                 $Ob._defaults.Success = false;
@@ -90,7 +107,8 @@
 
                         // Validações para Checkbox
                         case 'checkbox':
-                            if (!field.prop('checked')) {
+                            if (!field.prop('checked'))
+                            {
                                 $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Required, $Ob._settings.ColorErro);
                                 field.focus();
                                 $Ob._defaults.Success = false;
@@ -99,7 +117,8 @@
 
                         // Validações para Textarea
                         case 'textarea':
-                            if (field.val() == "") {
+                            if (field.val() == "")
+                            {
                                 $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Required, $Ob._settings.ColorErro);
                                 field.focus();
                                 $Ob._defaults.Success = false;
@@ -109,7 +128,8 @@
 
                         // Validações para input Password
                         case 'password':
-                            if (field.val() == "") {
+                            if (field.val() == "")
+                            {
                                 $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Required, $Ob._settings.ColorErro);
                                 field.focus();
                                 $Ob._defaults.Success = false;
@@ -121,7 +141,8 @@
                         case 'file':
                             var Types = field.conf.filetype.replace(/,/g,'|');
                             var FileType = new RegExp('(?:'+Types+')$');
-                            if (!field.val().match(FileType)) {
+                            if (!field.val().match(FileType))
+                            {
                                 $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Required, $Ob._settings.ColorErro);
                                 field.focus();
                                 $Ob._defaults.Success = false;
@@ -137,7 +158,8 @@
         },
 
         // Método de exibição de mensagens
-        'ShowMsg': function($Ob, field, text, color) {
+        'ShowMsg': function($Ob, field, text, color)
+        {
             if (field) {
                 text = (text) ? text : $Ob._message.Default;
                 var Id = $Ob._methods.CreateId(4);
@@ -154,12 +176,15 @@
                             , color: color
                 }).slideDown(400);
                 var Type = field.prop('type');
-                if(Type == "text" || Type == "password" || Type == "textarea"){
+                if(Type == "text" || Type == "password" || Type == "textarea")
+                {
                     field.on('keypress', function() {
                         $(this).css({'border-color': ColorOld});
                         $Ob._methods.CleanMsg($Ob, $(this).data('rel'));
                     });
-                }else{
+                }
+                else
+                {
                     field.on('change', function(){
                         $(this).css({'border-color': ColorOld});
                         $Ob._methods.CleanMsg($Ob, $(this).data('rel'));
@@ -169,7 +194,8 @@
         },
 
         // Método de limpeza de mensagens
-        'CleanMsg': function($Ob, Id) {
+        'CleanMsg': function($Ob, Id)
+        {
             if (Id) {
                 $("#" + Id).remove();
             } else {
@@ -184,17 +210,180 @@
             size = (size) ? size : 1;
             var randomized = Math.ceil(Math.random() * Math.pow(10, size));
             var digit = Math.ceil(Math.log(randomized));
-            while (digit > 10) {
+            while (digit > 10)
+            {
                 digit = Math.ceil(Math.log(digit));
             }
             var id = randomized + '-' + digit;
             return id;
         },
 
+        // Método para validar o tipo do campo e aplicar regras específicas
+        'ValidType': function($Ob, field)
+        {
+            switch(field.conf.type.toLowerCase())
+            {
+                case 'cpf':
+                    var value = field.val();
+                    var cpf = value.replace(/[^\d]+/g,'');
+                    if(cpf == '')
+                    {
+                        $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Cnpj, $Ob._settings.ColorErro);
+                        field.focus();
+                        $Ob._defaults.Success = false;
+                        return false;
+                    }
+                    // Elimina CPFs invalidos conhecidos
+                    if (cpf.length != 11 ||
+                        cpf == "00000000000" ||
+                        cpf == "11111111111" ||
+                        cpf == "22222222222" ||
+                        cpf == "33333333333" ||
+                        cpf == "44444444444" ||
+                        cpf == "55555555555" ||
+                        cpf == "66666666666" ||
+                        cpf == "77777777777" ||
+                        cpf == "88888888888" ||
+                        cpf == "99999999999")
+                    {
+                        $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Cnpj, $Ob._settings.ColorErro);
+                        field.focus();
+                        $Ob._defaults.Success = false;
+                        return false;
+                    }
+                    // Valida 1o digito
+                    var add = 0;
+                    for (i=0; i < 9; i ++)
+                        add += parseInt(cpf.charAt(i)) * (10 - i);
+                    var rev = 11 - (add % 11);
+                    if (rev == 10 || rev == 11)
+                        rev = 0;
+                    if (rev != parseInt(cpf.charAt(9)))
+                    {
+                        $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Cnpj, $Ob._settings.ColorErro);
+                        field.focus();
+                        $Ob._defaults.Success = false;
+                        return false;
+                    }
+                    // Valida 2o digito
+                    var add = 0;
+                    for (i = 0; i < 10; i ++)
+                        add += parseInt(cpf.charAt(i)) * (11 - i);
+                    rev = 11 - (add % 11);  if (rev == 10 || rev == 11)
+                    rev = 0;
+                    if (rev != parseInt(cpf.charAt(10)))
+                    {
+                        $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Cnpj, $Ob._settings.ColorErro);
+                        field.focus();
+                        $Ob._defaults.Success = false;
+                        return false;
+                    }
+                break;
+                case'cnpj':
+                    var value = field.val();
+                    var cnpj = value.replace(/[^\d]+/g,'');
+                    if(cnpj == '')
+                    {
+                        $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Cnpj, $Ob._settings.ColorErro);
+                        field.focus();
+                        $Ob._defaults.Success = false;
+                        return false;
+                    }
+                    if (cnpj.length != 14)
+                        return false;
+                    // Elimina CNPJs invalidos conhecidos
+                    if (cnpj == "00000000000000" ||
+                        cnpj == "11111111111111" ||
+                        cnpj == "22222222222222" ||
+                        cnpj == "33333333333333" ||
+                        cnpj == "44444444444444" ||
+                        cnpj == "55555555555555" ||
+                        cnpj == "66666666666666" ||
+                        cnpj == "77777777777777" ||
+                        cnpj == "88888888888888" ||
+                        cnpj == "99999999999999")
+                    {
+                        $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Cnpj, $Ob._settings.ColorErro);
+                        field.focus();
+                        $Ob._defaults.Success = false;
+                        return false;
+                    }
+                    // Valida DVs
+                    var tamanho = cnpj.length - 2
+                    var numeros = cnpj.substring(0,tamanho);
+                    var digitos = cnpj.substring(tamanho);
+                    var soma = 0;
+                    var pos = tamanho - 7;
+                    for (i = tamanho; i >= 1; i--) {
+                      soma += numeros.charAt(tamanho - i) * pos--;
+                      if (pos < 2)
+                            pos = 9;
+                    }
+                    var resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+                    if (resultado != digitos.charAt(0))
+                    {
+                        $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Cnpj, $Ob._settings.ColorErro);
+                        field.focus();
+                        $Ob._defaults.Success = false;
+                        return false;
+                    }
+                    tamanho = tamanho + 1;
+                    numeros = cnpj.substring(0,tamanho);
+                    soma = 0;
+                    pos = tamanho - 7;
+                    for (i = tamanho; i >= 1; i--) {
+                      soma += numeros.charAt(tamanho - i) * pos--;
+                      if (pos < 2)
+                            pos = 9;
+                    }
+                    resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+                    if (resultado != digitos.charAt(1))
+                    {
+                        $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Cnpj, $Ob._settings.ColorErro);
+                        field.focus();
+                        $Ob._defaults.Success = false;
+                        return false;
+                    }
+                break;
+                case 'mail':
+                    var value = field.val();
+                    var regex = new RegExp(/^[A-Za-z0-9_\-\.]+@[A-Za-z0-9_\-\.]{2,}\.[A-Za-z0-9]{2,}(\.[A-Za-z0-9])?/);
+                    if(typeof(value) == "string"){
+                        if(!regex.test(value))
+                        {
+                            $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Email, $Ob._settings.ColorErro);
+                            field.focus();
+                            $Ob._defaults.Success = false;
+                            return false;
+                        }
+                    }
+                    else if(typeof(value) == "object")
+                    {
+                        if(!regex.test(value.value))
+                        {
+                            $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Email, $Ob._settings.ColorErro);
+                            field.focus();
+                            $Ob._defaults.Success = false;
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Email, $Ob._settings.ColorErro);
+                        field.focus();
+                        $Ob._defaults.Success = false;
+                        return false;
+                    }
+                break;
+            }
+        },
+
         // Método para aplicar limite de caracters em
         // campos text ou textarea ou password
-        'SetLimitCharacter': function($Ob, field) {
-            if ($Ob._defaults.character.Active || field.conf.characterative) {
+        'SetLimitCharacter': function($Ob, field)
+        {
+            if ($Ob._defaults.character.Active || field.conf.characterative)
+            {
                 var Id = $Ob._methods.CreateId(3);
                 var msg = (field.conf.maxtext) ? field.conf.maxtext : $Ob._defaults.character.MaxText;
                 var Max = (field.conf.max) ? field.conf.max : $Ob._defaults.character.Max;
@@ -220,7 +409,8 @@
 
         // Método que define o limite de caracter em
         // campos text ou textarea ou password
-        'SetLimitCharacterUpD': function(field, Max, target) {
+        'SetLimitCharacterUpD': function(field, Max, target)
+        {
             var text = field.val();
             var qnt = text.length;
             var empty;
@@ -233,7 +423,8 @@
         },
 
         // Método que pega o posicionamento do campo
-        'getPosition': function(element) {
+        'getPosition': function(element)
+        {
             if (element) {
                 var position = element.offset();
                 var Height = element.height();
@@ -254,8 +445,10 @@
         },
 
         // Método para pegar o campo do formulário
-        'getField': function($Ob, valid) {
-            $('[form=' + $Ob._settings.FormName + ']').each(function(i) {
+        'getField': function($Ob, valid)
+        {
+            $('[form=' + $Ob._settings.FormName + ']').each(function(i)
+            {
                 var field = $(this);
                 field.Id = field.attr('id');
                 field.Name = field.attr('name');
@@ -268,7 +461,8 @@
         },
 
         // Método para pegar as configurações do campo
-        'getConf': function($Ob, field) {
+        'getConf': function($Ob, field)
+        {
             var conf = eval($(field).data("conf"));
             if(conf && conf[0].msg) {
                 $Ob._message.Erro.Required = conf[0].msg;
@@ -276,7 +470,8 @@
             return (conf) ? conf[0] : 0;
         }
     };
-    // Variáveis com valores padão
+
+    // Variáveis com valores padrão
     var pluginName = 'FullValidaForm',
             defaults = {
                 enctype: 'enctype="multipart/form-data"'
@@ -291,22 +486,30 @@
                     , MaxText: "Resta(m) caracter(es): "
                 }
         };
+
     // Construtor
-    function Plugin(element, options) {
+    function Plugin(element, options)
+    {
         this._element = element;
         this._Id = $(element).attr("id");
+
         // Configurações
         var settings = {
             FormName: this._Id
                     , ColorErro: '#FF0000'
         };
+
         // Menssagens (Erro, Alerta, Informações)
         var message = {
-            Default: 'Msg Campo!'
-                    , Erro: {
-                Required: 'Campo requerido!'
+            Default: 'Msg Campo!',
+            Erro: {
+                Required: 'Campo requerido!',
+                Cpf: 'CPF inv&aacute;lido',
+                Cnpj: 'CNPJ inv&aacute;lido',
+                Email: 'E-mail inv&aacute;lido'
             }
         };
+
         // Montagem das instancias do plugin
         $.extend(true, settings, options);
         this._message = message;
@@ -317,24 +520,34 @@
         this._methods = methods;
         this.init();
     };
+
     //Init prototype
-    Plugin.prototype.init = function() {
+    Plugin.prototype.init = function()
+    {
         $("#" + this._Id).attr({
             action: this._defaults.action
                     , method: this._defaults.method
                     , enctype: this._defaults.enctype
         });
         this._methods.getField(this);
-        $('#Submeter[form=' + this._settings.FormName + ']').unbind('click').on('click', $.proxy(function() {
+        $('#Submeter[form=' + this._settings.FormName + ']')
+            .prop('type','button')
+            .unbind('click')
+            .on('click', $.proxy(function() {
             this._methods.SubmitClick(this);
         }, this));
     };
-    $.fn.FullValidaForm = function(options) {
+
+    $.fn.FullValidaForm = function(options)
+    {
         // Call para manter encadeamento
-        return this.each(function() {
-            if (!$.data(this, 'plugin_' + pluginName)) {
+        return this.each(function()
+        {
+            if (!$.data(this, 'plugin_' + pluginName))
+            {
                 $.data(this, 'plugin_' + pluginName, new Plugin(this, options));
             }
         });
     };
+
 })(jQuery);
