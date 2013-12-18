@@ -228,7 +228,7 @@
                     var cpf = value.replace(/[^\d]+/g,'');
                     if(cpf == '')
                     {
-                        $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Cnpj, $Ob._settings.ColorErro);
+                        $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Cpf, $Ob._settings.ColorErro);
                         field.focus();
                         $Ob._defaults.Success = false;
                         return false;
@@ -246,7 +246,7 @@
                         cpf == "88888888888" ||
                         cpf == "99999999999")
                     {
-                        $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Cnpj, $Ob._settings.ColorErro);
+                        $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Cpf, $Ob._settings.ColorErro);
                         field.focus();
                         $Ob._defaults.Success = false;
                         return false;
@@ -260,7 +260,7 @@
                         rev = 0;
                     if (rev != parseInt(cpf.charAt(9)))
                     {
-                        $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Cnpj, $Ob._settings.ColorErro);
+                        $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Cpf, $Ob._settings.ColorErro);
                         field.focus();
                         $Ob._defaults.Success = false;
                         return false;
@@ -273,7 +273,7 @@
                     rev = 0;
                     if (rev != parseInt(cpf.charAt(10)))
                     {
-                        $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Cnpj, $Ob._settings.ColorErro);
+                        $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Cpf, $Ob._settings.ColorErro);
                         field.focus();
                         $Ob._defaults.Success = false;
                         return false;
@@ -340,6 +340,38 @@
                     if (resultado != digitos.charAt(1))
                     {
                         $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Cnpj, $Ob._settings.ColorErro);
+                        field.focus();
+                        $Ob._defaults.Success = false;
+                        return false;
+                    }
+                break;
+                case 'date':
+                    var value = field.val();
+                    var ardt=new Array;
+                    var ExpReg=new RegExp("(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/[0-9]{2,4}");
+                    ardt=value.split("/");
+                    erro=false;
+                    if (value.search(ExpReg)==-1)
+                    {
+                        erro = true;
+                    }
+                    else if (((ardt[1]==4)||(ardt[1]==6)||(ardt[1]==9)||(ardt[1]==11))&&(ardt[0]>30))
+                    {
+                        erro = true;
+                    }
+                    else if ( ardt[1]==2)
+                    {
+                        if ((ardt[0]>28)&&((ardt[2]%4)!=0))
+                        {
+                            erro = true;
+                        }
+                        if ((ardt[0]>29)&&((ardt[2]%4)==0)){
+                            erro = true;
+                        }
+                    }
+                    if (erro)
+                    {
+                        $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Date, $Ob._settings.ColorErro);
                         field.focus();
                         $Ob._defaults.Success = false;
                         return false;
@@ -472,7 +504,7 @@
     };
 
     // Variáveis com valores padrão
-    var pluginName = 'FullValidaForm',
+    var pluginName = 'FullFormValidation',
             defaults = {
                 enctype: 'enctype="multipart/form-data"'
                 , method: 'post'
@@ -506,7 +538,8 @@
                 Required: 'Campo requerido!',
                 Cpf: 'CPF inv&aacute;lido',
                 Cnpj: 'CNPJ inv&aacute;lido',
-                Email: 'E-mail inv&aacute;lido'
+                Email: 'E-mail inv&aacute;lido',
+                'Date': 'Data inv&aacute;lida'
             }
         };
 
@@ -538,7 +571,7 @@
         }, this));
     };
 
-    $.fn.FullValidaForm = function(options)
+    $.fn.FullFormValidation = function(options)
     {
         // Call para manter encadeamento
         return this.each(function()

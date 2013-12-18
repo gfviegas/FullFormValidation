@@ -15,21 +15,21 @@
 
             </header>
             <div class="conteudo">
-                <form id="FullValidaForm" method="post">
+                <form id="FullFormValidation" method="post">
                     <div>
                         <!-- Input de texto simples //-->
                         <label></label>
-                        <input type="text" name="text" id="teste" value="" data-conf="[{req:true, type:'mail', msg:'Preencha o <b>Nome</b>'}]" form="FullValidaForm" /><br><br><br><br>
-                        <input type="password" name="password" id="teste2" value="" data-conf="[{req:true, msg:'Preencha o <b>Campo</b>'}]" form="FullValidaForm" /><br><br><br><br>
-                        <input type="file" name="file" id="teste3" data-conf="[{req:true, msg:'Caminho do arquivo escolhido não é uma imagem!', filetype:'gif,jpg,png,bmp'}]" form="FullValidaForm" /><br><br><br><br>
-                        <input type="radio" name="radioboxteste[]" id="teste4" value="" data-conf="[{req:true, msg:'Preencha o <b>Campo</b>'}]" form="FullValidaForm" /><br><br><br><br>
-                        <input type="checkbox" name="checboxteste[]" id="teste5" value="" data-conf="[{req:true, msg:'Preencha o <b>Campo</b>'}]" form="FullValidaForm" /><br><br><br><br>
-                        <input type="checkbox" name="checboxteste[]" id="teste5-1" value="" data-conf="[{req:true, msg:'Preencha o <b>Campo</b>'}]" form="FullValidaForm" /><br><br><br><br>
-                        <textarea name="textarea" form="FullValidaForm" data-conf="[{req:true, max:'20'}]"></textarea><br><br><br><br>
+                        <input type="text" name="text" id="teste" value="" data-conf="[{req:true, type:'date', msg:'Preencha o <b>Nome</b>'}]" form="FullFormValidation" /><br><br><br><br>
+                        <input type="password" name="password" id="teste2" value="" data-conf="[{req:true, msg:'Preencha o <b>Campo</b>'}]" form="FullFormValidation" /><br><br><br><br>
+                        <input type="file" name="file" id="teste3" data-conf="[{req:true, msg:'Caminho do arquivo escolhido não é uma imagem!', filetype:'gif,jpg,png,bmp'}]" form="FullFormValidation" /><br><br><br><br>
+                        <input type="radio" name="radioboxteste[]" id="teste4" value="" data-conf="[{req:true, msg:'Preencha o <b>Campo</b>'}]" form="FullFormValidation" /><br><br><br><br>
+                        <input type="checkbox" name="checboxteste[]" id="teste5" value="" data-conf="[{req:true, msg:'Preencha o <b>Campo</b>'}]" form="FullFormValidation" /><br><br><br><br>
+                        <input type="checkbox" name="checboxteste[]" id="teste5-1" value="" data-conf="[{req:true, msg:'Preencha o <b>Campo</b>'}]" form="FullFormValidation" /><br><br><br><br>
+                        <textarea name="textarea" form="FullFormValidation" data-conf="[{req:true, max:'20'}]"></textarea><br><br><br><br>
                     </div>
                     <div>
                         <!-- Botão Submit //-->
-                        <input type="submit" id="Submeter" form="FullValidaForm" value="Teste" />
+                        <input type="submit" id="Submeter" form="FullFormValidation" value="Teste" />
                 </form>
                 <footer class="rodape">
 
@@ -39,9 +39,9 @@
     </div>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/jquery-2.0.3.min.js">\x3C/script>')</script>
-    <script src="jquery.fullvalidaform.1.0.0.js"></script>
+    <script src="jquery.FullFormValidation.1.0.0.js"></script>
     <script type="text/javascript">
-        $("#FullValidaForm").FullValidaForm();
+        $("#FullFormValidation").FullFormValidation();
     </script>
 </body>
 </html>
