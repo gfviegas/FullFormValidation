@@ -73,6 +73,14 @@
                 case 'file':
                     break;
 
+                // Inicialização Select simples
+                case 'select-one':
+                    break;
+
+                // Inicialização Select multiplo
+                case 'select-multiple':
+                    break;
+
                 // Inicialização Padrão
                 default:
                     break;
@@ -157,6 +165,29 @@
                             var Types = field.conf.filetype.replace(/,/g,'|');
                             var FileType = new RegExp('(?:'+Types+')$');
                             if (!field.val().match(FileType))
+                            {
+                                $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Required, $Ob._settings.ColorErro);
+                                field.focus();
+                                $Ob._defaults.Success = false;
+                                return false;
+                            }
+                            break;
+
+                        // Validações para select simples
+                        case 'select-one':
+                            if (field.val() == "")
+                            {
+                                $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Required, $Ob._settings.ColorErro);
+                                field.focus();
+                                $Ob._defaults.Success = false;
+                                return false;
+                            }
+                            break;
+
+                        // Validações para select multiplo
+                        case 'select-multiple':
+                            var valor = field.val();
+                            if (valor == null || valor == "")
                             {
                                 $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Required, $Ob._settings.ColorErro);
                                 field.focus();
