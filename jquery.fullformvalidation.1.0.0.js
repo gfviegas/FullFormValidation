@@ -27,6 +27,21 @@
                     {
                         $(field).attr('maxlength', field.conf.max);
                     }
+
+                    // Verifica se o campo é numérico
+                    if(field.conf.type.toLowerCase() == "number"){
+                        field.keydown(function(e){
+                            // Permite algumas teclas
+                            if((e.keyCode>=96&&e.keyCode<=105)||(e.keyCode>=48&&e.keyCode<=57)||(e.keyCode>=8&&e.keyCode<=46)||(e.keyCode>=112&&e.keyCode<=123)){
+                                return true;
+                            }
+                            // Bloqueia todo o resto do teclado
+                            return false;
+                        }).keyup(function(e){
+                            // Remove tudo que não é numérico
+                            $(this).val( $(this).val().replace(/\s/g,"") );
+                        });
+                    }
                     break;
 
                 // Inicialização Radiobox
@@ -377,6 +392,17 @@
                         return false;
                     }
                 break;
+                case 'number':
+                    var value = field.val();
+                    var reg = new RegExp("^[+\-]?(\d+([.,]\d+)?)+$");
+                    if(isNaN(value))
+                    {
+                        $Ob._methods.ShowMsg($Ob, field, $Ob._message.Erro.Num, $Ob._settings.ColorErro);
+                        field.focus();
+                        $Ob._defaults.Success = false;
+                        return false;
+                    }
+                break;
                 case 'mail':
                     var value = field.val();
                     var regex = new RegExp(/^[A-Za-z0-9_\-\.]+@[A-Za-z0-9_\-\.]{2,}\.[A-Za-z0-9]{2,}(\.[A-Za-z0-9])?/);
@@ -539,7 +565,8 @@
                 Cpf: 'CPF inv&aacute;lido',
                 Cnpj: 'CNPJ inv&aacute;lido',
                 Email: 'E-mail inv&aacute;lido',
-                'Date': 'Data inv&aacute;lida'
+                'Date': 'Data inv&aacute;lida',
+                Num: 'Valor inv&aacute;lido, permitido somente n&uacute;meros!'
             }
         };
 
