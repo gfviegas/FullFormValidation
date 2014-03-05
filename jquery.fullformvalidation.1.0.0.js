@@ -2,17 +2,17 @@
  * VERSION: 1.0.0
  * BY: THIAGO LUCIANO - BELO HORIZONTE - MG
  *
- * Descrição: Este plugin foi desenvolvido para prover uma solução mais simples
- * para validação de forumulários complexos. Contará com validações e mascaras.
+ * Descrição: This plugin was developed to provide a simple solution for
+ * validation of complex forms.
  */
 ;
 (function($, window, undefined)
 {
 
-    // Métodos Literários
+    // Literary methods
     var methods = {
 
-        // Método de inicialização
+        // Initialization method
         'InitField': function($Ob, field)
         {
             field.conf = $Ob._methods.getConf($Ob, field);
@@ -21,38 +21,38 @@
             switch (Type.toLowerCase())
             {
 
-                // Inicialização input Text
+                // Input Text initialization
                 case 'text':
                     if(field.conf.max)
                     {
                         $(field).attr('maxlength', field.conf.max);
                     }
 
-                    // Verifica se o campo é numérico
+                    // Checks if the field is numeric
                     if(field.conf.type.toLowerCase() == "number"){
                         field.keydown(function(e){
-                            // Permite algumas teclas
+                            // Allows some keys
                             if((e.keyCode>=96&&e.keyCode<=105)||(e.keyCode>=48&&e.keyCode<=57)||(e.keyCode>=8&&e.keyCode<=46)||(e.keyCode>=112&&e.keyCode<=123)){
                                 return true;
                             }
-                            // Bloqueia todo o resto do teclado
+                            // Blocks all the rest of the keyboard
                             return false;
                         }).keyup(function(e){
-                            // Remove tudo que não é numérico
+                            // Remove everything that is not numeric
                             $(this).val( $(this).val().replace(/\s/g,"") );
                         });
                     }
                     break;
 
-                // Inicialização Radiobox
+                // Radiobox initialization
                 case 'radio':
                     break;
 
-                // Inicialização Checkbox
+                // Checkbox initialization
                 case 'checkbox':
                     break;
 
-                // Inicialização Textarea
+                // Textarea initialization
                 case 'textarea':
                     if(field.conf.max)
                     {
@@ -61,7 +61,7 @@
                     $Ob._methods.SetLimitCharacter($Ob, field);
                     break;
 
-                // Inicialização input Password
+                // Input Password initialization
                 case 'password':
                     if(field.conf.max)
                     {
@@ -69,25 +69,25 @@
                     }
                     break;
 
-                // Inicialização input File
+                // Input File initialization
                 case 'file':
                     break;
 
-                // Inicialização Select simples
+                // Simple select initialization
                 case 'select-one':
                     break;
 
-                // Inicialização Select multiplo
+                // Multiple select initialization
                 case 'select-multiple':
                     break;
 
-                // Inicialização Padrão
+                // Default initialization
                 default:
                     break;
             }
         },
 
-        // Método de Validações
+        // Method from validates
         'ValidField': function($Ob, field)
         {
             field.conf = $Ob._methods.getConf($Ob, field);
@@ -96,13 +96,13 @@
             if (field.conf)
             {
 
-                // Regras para campos obrigatórios
+                // Rules for require fields
                 if (field.conf.req)
                 {
                     switch (Type.toLowerCase())
                     {
 
-                        // Validações para input Text
+                        // Validates for input Text
                         case 'text':
                             if (field.val() == "")
                             {
@@ -118,7 +118,7 @@
                             }
                             break;
 
-                        // Validações para Radiobox
+                        // Validates for Radiobox
                         case 'radio':
                             if (!field.prop('checked'))
                             {
@@ -128,7 +128,7 @@
                             }
                             break;
 
-                        // Validações para Checkbox
+                        // Validates for Checkbox
                         case 'checkbox':
                             if (!field.prop('checked'))
                             {
@@ -138,7 +138,7 @@
                             }
                             break;
 
-                        // Validações para Textarea
+                        // Validates for Textarea
                         case 'textarea':
                             if (field.val() == "")
                             {
@@ -149,7 +149,7 @@
                             }
                             break;
 
-                        // Validações para input Password
+                        // Validates for input Password
                         case 'password':
                             if (field.val() == "")
                             {
@@ -160,7 +160,7 @@
                             }
                             break;
 
-                        // Validações para input File
+                        // Validates for input File
                         case 'file':
                             var Types = field.conf.filetype.replace(/,/g,'|');
                             var FileType = new RegExp('(?:'+Types+')$');
@@ -173,7 +173,7 @@
                             }
                             break;
 
-                        // Validações para select simples
+                        // Validates for simple select
                         case 'select-one':
                             if (field.val() == "")
                             {
@@ -184,7 +184,7 @@
                             }
                             break;
 
-                        // Validações para select multiplo
+                        // Validates for multiple select
                         case 'select-multiple':
                             var valor = field.val();
                             if (valor == null || valor == "")
@@ -199,11 +199,11 @@
                 }
             }
             if($Ob._defaults.Success){
-               // console.log($Ob._defaults.Success);
+               // to to do
             }
         },
 
-        // Método de exibição de mensagens
+        // Method from show messages
         'ShowMsg': function($Ob, field, text, color)
         {
             if (field) {
@@ -239,7 +239,7 @@
             }
         },
 
-        // Método de limpeza de mensagens
+        // Method to clear messages
         'CleanMsg': function($Ob, Id)
         {
             if (Id) {
@@ -249,9 +249,9 @@
             }
         },
 
-        // Método para criação de ID's
-        // Este método é utilizado criar identificadores
-        // para listas de checkbox e radiobox.
+        // Method to create for ID's
+        // this method is utilized to create identifiers
+        // to lists the checkbox and radiobox.
         'CreateId': function(size) {
             size = (size) ? size : 1;
             var randomized = Math.ceil(Math.random() * Math.pow(10, size));
@@ -264,7 +264,7 @@
             return id;
         },
 
-        // Método para validar o tipo do campo e aplicar regras específicas
+        // Method to validates the type for field and apply rules
         'ValidType': function($Ob, field)
         {
             switch(field.conf.type.toLowerCase())
@@ -279,7 +279,7 @@
                         $Ob._defaults.Success = false;
                         return false;
                     }
-                    // Elimina CPFs invalidos conhecidos
+                    // Delete CPFs invalid
                     if (cpf.length != 11 ||
                         cpf == "00000000000" ||
                         cpf == "11111111111" ||
@@ -297,7 +297,7 @@
                         $Ob._defaults.Success = false;
                         return false;
                     }
-                    // Valida 1o digito
+                    // Validates first digit
                     var add = 0;
                     for (i=0; i < 9; i ++)
                         add += parseInt(cpf.charAt(i)) * (10 - i);
@@ -311,7 +311,7 @@
                         $Ob._defaults.Success = false;
                         return false;
                     }
-                    // Valida 2o digito
+                    // Validates second digit
                     var add = 0;
                     for (i = 0; i < 10; i ++)
                         add += parseInt(cpf.charAt(i)) * (11 - i);
@@ -337,7 +337,7 @@
                     }
                     if (cnpj.length != 14)
                         return false;
-                    // Elimina CNPJs invalidos conhecidos
+                    // Delete CNPJs invalid
                     if (cnpj == "00000000000000" ||
                         cnpj == "11111111111111" ||
                         cnpj == "22222222222222" ||
@@ -354,7 +354,7 @@
                         $Ob._defaults.Success = false;
                         return false;
                     }
-                    // Valida DVs
+                    // Validates DVs
                     var tamanho = cnpj.length - 2
                     var numeros = cnpj.substring(0,tamanho);
                     var digitos = cnpj.substring(tamanho);
@@ -467,8 +467,8 @@
             }
         },
 
-        // Método para aplicar limite de caracters em
-        // campos text ou textarea ou password
+        // Method to apply limit the characters in
+        // fields: text or textarea or password
         'SetLimitCharacter': function($Ob, field)
         {
             if ($Ob._defaults.character.Active || field.conf.characterative)
@@ -496,8 +496,8 @@
             }
         },
 
-        // Método que define o limite de caracter em
-        // campos text ou textarea ou password
+        // Method to define limit of character in
+        // fields: text, textarea, password
         'SetLimitCharacterUpD': function(field, Max, target)
         {
             var text = field.val();
@@ -511,7 +511,7 @@
             }
         },
 
-        // Método que pega o posicionamento do campo
+        // Search field placement
         'getPosition': function(element)
         {
             if (element) {
@@ -527,13 +527,7 @@
             return false;
         },
 
-        // Método para submeter o formulário
-        'SubmitClick': function($Ob) {
-            $Ob._methods.CleanMsg($Ob);
-            $Ob._methods.getField($Ob, true);
-        },
-
-        // Método para pegar o campo do formulário
+        // Method to get the form field
         'getField': function($Ob, valid)
         {
             $('[form=' + $Ob._settings.FormName + ']').each(function(i)
@@ -549,7 +543,7 @@
             });
         },
 
-        // Método para pegar as configurações do campo
+        // Method to get the field settings
         'getConf': function($Ob, field)
         {
             var conf = eval($(field).data("conf"));
@@ -557,10 +551,22 @@
                 $Ob._message.Erro.Required = conf[0].msg;
             }
             return (conf) ? conf[0] : 0;
+        },
+
+        // Method to submit the form
+        'SubmitClick': function($Ob) {
+            $Ob._methods.CleanMsg($Ob);
+            $Ob._methods.getField($Ob, true);
+            $Ob._methods.Post();
+        },
+
+        // callback to submit
+        'Post': function(){
+            // idle
         }
     };
 
-    // Variáveis com valores padrão
+    // Variable default
     var pluginName = 'FullFormValidation',
             defaults = {
                 enctype: 'enctype="multipart/form-data"'
@@ -572,36 +578,36 @@
                 , character: {
                     Active: true
                     , Max: 100
-                    , MaxText: "Resta(m) caracter(es): "
+                    , MaxText: "characters left: "
                 }
         };
 
-    // Construtor
+    // Constructor
     function Plugin(element, options)
     {
         this._element = element;
         this._Id = $(element).attr("id");
 
-        // Configurações
+        // Settings
         var settings = {
             FormName: this._Id
                     , ColorErro: '#FF0000'
         };
 
-        // Menssagens (Erro, Alerta, Informações)
+        // Message (Error, Alert, Information)
         var message = {
-            Default: 'Msg Campo!',
+            Default: 'default message!',
             Erro: {
-                Required: 'Campo requerido!',
-                Cpf: 'CPF inv&aacute;lido',
-                Cnpj: 'CNPJ inv&aacute;lido',
-                Email: 'E-mail inv&aacute;lido',
-                'Date': 'Data inv&aacute;lida',
-                Num: 'Valor inv&aacute;lido, permitido somente n&uacute;meros!'
+                Required: 'required field!',
+                Cpf: 'invalid CPF',
+                Cnpj: 'invalid CNPJ',
+                Email: 'invalid email',
+                'Date': 'invalid date',
+                Num: ' invalid value, allowed only numbers!'
             }
         };
 
-        // Montagem das instancias do plugin
+        // Object plugin
         $.extend(true, settings, options);
         this._message = message;
         this._options = options;
@@ -631,7 +637,7 @@
 
     $.fn.FullFormValidation = function(options)
     {
-        // Call para manter encadeamento
+        // Preventing against multiple instantiations
         return this.each(function()
         {
             if (!$.data(this, 'plugin_' + pluginName))
