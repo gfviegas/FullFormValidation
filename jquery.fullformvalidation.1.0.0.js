@@ -198,9 +198,6 @@
                     }
                 }
             }
-            if($Ob._defaults.Success){
-               // to to do
-            }
         },
 
         // Method from show messages
@@ -555,9 +552,13 @@
 
         // Method to submit the form
         'SubmitClick': function($Ob) {
+            $Ob._defaults.Success = true;
             $Ob._methods.CleanMsg($Ob);
             $Ob._methods.getField($Ob, true);
-            $Ob._methods.Post();
+            if($Ob._defaults.Success)
+            {
+               $Ob._methods.Post();
+            }
         },
 
         // callback to submit
