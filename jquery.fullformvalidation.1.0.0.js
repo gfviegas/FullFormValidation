@@ -2,7 +2,7 @@
  * VERSION: 1.0.0
  * BY: THIAGO LUCIANO - BELO HORIZONTE - MG
  *
- * Descrição: This plugin was developed to provide a simple solution for
+ * Descriï¿½ï¿½o: This plugin was developed to provide a simple solution for
  * validation of complex forms.
  */
 ;
@@ -628,7 +628,7 @@
                     , enctype: this._defaults.enctype
         });
         this._methods.getField(this);
-        $('#Submeter[form=' + this._settings.FormName + ']')
+        $('#'+this._Id+' input[type="submit"][form=' + this._settings.FormName + ']')
             .prop('type','button')
             .unbind('click')
             .on('click', $.proxy(function() {
